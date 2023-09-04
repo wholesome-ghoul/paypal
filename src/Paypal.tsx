@@ -76,6 +76,19 @@ const Paypal = ({ amount, credits, customerID, temporaryID }: Props) => {
     }
   };
 
+  const _onCreateOrder = async () => {
+    try {
+      const orderID = await createOrder(amount);
+
+      return orderID;
+    } catch (e) {
+      pushNotification(
+        NOTIFICATION.RESPONSE_CRITICAL.name,
+        NOTIFICATION.RESPONSE_CRITICAL
+      );
+    }
+  };
+
   return (
     <>
       <NotificationContainer />
@@ -90,7 +103,7 @@ const Paypal = ({ amount, credits, customerID, temporaryID }: Props) => {
           disabled={false}
           forceReRender={[amount, customerID]}
           fundingSource={undefined}
-          createOrder={() => createOrder(amount)}
+          createOrder={_onCreateOrder}
           onApprove={_onApprove}
         />
       </PayPalScriptProvider>

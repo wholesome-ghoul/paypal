@@ -1,10 +1,8 @@
-import { Container, Heading, hooks } from "@allaround/all-components";
+import { Button, Container, Heading, Text } from "@allaround/all-components";
 
 import Paypal from "./Paypal";
 import styles from "./YoutubeTLDR.module.css";
 import { useEffect, useState } from "react";
-
-const { useNotification } = hooks;
 
 type $Payload = {
   service: string;
@@ -22,8 +20,6 @@ const YoutubeTLDR = () => {
     customerID: null,
     temporaryID: null,
   });
-  const { push: pushNotification, container: NotificationContainer } =
-    useNotification({ position: "top" });
 
   useEffect(() => {
     try {
@@ -33,17 +29,16 @@ const YoutubeTLDR = () => {
       const parsedPayload = JSON.parse(b64DecodedPaylaod);
 
       setPayload(parsedPayload);
-    } catch (e) {
-      pushNotification("error", {
-        variant: "alert",
-        heading: "Something went wrong",
-      });
-    }
+    } catch (e) {}
   }, []);
+
+  const paypalMe = () => {
+    const url = "https://paypal.me/wholesomeghoul?country.x=GE&locale.x=en_US";
+    window.open(url, "_blank");
+  };
 
   return (
     <>
-      <NotificationContainer />
       <Container className={styles.container} noGrid flex>
         <Heading.h2 className={styles.heading}>
           Choose Your Payment Method
@@ -56,6 +51,19 @@ const YoutubeTLDR = () => {
             temporaryID={payload.temporaryID}
             credits={payload.credits}
           />
+        </Container>
+
+        <Container className={styles.donateContainer} noGrid flex>
+          <Heading.h5 className={styles.heading}>
+            Or if you just want to donate
+          </Heading.h5>
+
+          <Button onClick={paypalMe}>Donate</Button>
+          <Text className={styles.donateText}>
+            First $140 will always go to my goodest and bestest doggos, L and B.
+            Remaining funds (if any) will go towards my student loans. Thank
+            you, I appreciate it very much.
+          </Text>
         </Container>
       </Container>
     </>
