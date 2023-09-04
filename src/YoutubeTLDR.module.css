@@ -1,0 +1,14 @@
+.container {
+  padding: 1rem;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.heading {
+  margin-bottom: 2rem;
+}
+
+.paypalContainer {
+  height: unset;
+  width: 540px;
+}
