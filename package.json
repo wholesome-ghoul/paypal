@@ -7,7 +7,8 @@
     "build:prod:treemap": "yarn rm:dist && STAGING_ENV=prod TREEMAP=true webpack --config webpack.config.js --mode production && du -sh dist",
     "build:prod:watch": "yarn rm:dist && STAGING_ENV=prod TREEMAP=false webpack --config webpack.config.js --mode production --watch",
     "rm:dist": "rm -rf dist",
-    "tsc:config": "tsc --showConfig"
+    "tsc:config": "tsc --showConfig",
+    "deploy": "yarn build:prod && gh-pages -d dist"
   },
   "dependencies": {
     "@allaround/all-components": "^1.9.0",
@@ -18,6 +19,7 @@
     "@types/react": "^18.2.8",
     "@types/react-dom": "^18.2.4",
     "dotenv": "^16.1.4",
+    "gh-pages": "^6.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.11.2",
