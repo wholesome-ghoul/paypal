@@ -30,6 +30,7 @@ type OnApproveData = {
   creditsPending: number;
   creditsRemaining: number;
   customerID: string | null;
+  error?: string;
 };
 
 type OnApprove = {
@@ -58,11 +59,13 @@ const Paypal = ({ amount, credits, customerID, temporaryID }: Props) => {
 
   const _onApprove = async ({ orderID }: { orderID: string }) => {
     try {
-      await onApprove({
+      const response = await onApprove({
         orderID,
         customerID,
         temporaryID,
       });
+
+      if (response?.error) throw new Error(response.error);
 
       pushNotification(NOTIFICATION.RESPONSE_SUCCESS.name, {
         ...NOTIFICATION.RESPONSE_SUCCESS,
